@@ -80,7 +80,7 @@ const HomePage = () => {
           >
             {isOpen && (
               <nav
-                className={`absolute top-0 right-0 bg-[#1A1A1A] w-[450px] h-[640px] p-5  md:h-[600px] md:w-[450px] lg:h-[700px] lg:w-[550px] xl:w-[660px] xl:h-[800px] 2xl:w-[960px] 2xl:h-[1160px]`}
+                className={`absolute top-0 right-0 bg-[#1A1A1A] w-[450px] h-[640px] p-5  md:h-[600px] md:w-[450px] lg:h-[700px] lg:w-[550px] xl:w-[660px] xl:h-[700px] 2xl:w-[960px] 2xl:h-[1160px]`}
               >
                 <div className="flex  items-start gap-x-10">
                   <div className="flex flex-col items-start sm:gap-y-5 lg:gap-y-8  xl:gap-y-5 2xl:gap-y-10">
@@ -151,7 +151,7 @@ const HomePage = () => {
 
                 <div className="flex mt-5 2xl:mt-0">
                   <img src="/assets/5.png"  className="sm:w-[100px] sm:h-[100px] lg:w-[120px] lg:h-[120px] 2xl:w-[200px] 2xl:h-[200px]"  alt="5" />
-                  <div className="flex flex-col gap-y-5  sm:mx-1 2xl:mx-2 3xl:mx-5  xl:ml-3 mr-2 xl:mt-14 2xl:mt-32"> 
+                  <div className="flex flex-col gap-y-5  sm:mx-1 2xl:mx-2 3xl:mx-5  xl:mx-4 mr-2 xl:mt-14 2xl:mt-32"> 
 
                   <IoIosArrowUp color='white' className="w-[10px] h-[10px] lg:w-[18px] lg:h-[18px] xl:w-[25px] xl:h-[25px]" />
                   <IoIosArrowDown className="w-[10px] h-[10px] lg:w-[18px] lg:h-[18px] xl:w-[25px] xl:h-[25px]" color='white' />
@@ -160,7 +160,7 @@ const HomePage = () => {
                   
                   <img src="/assets/6.png" className="sm:w-[140px] sm:h-[100px] lg:w-[180px] lg:h-[120px] 2xl:w-[334px] 2xl:h-[200px]" alt="6" />
                   <div>
-                  <img src="/assets/67.png" className="lg:w-[250px] lg:h-[90px] xl:w-[200px] xl:h-[110px] 2xl:w-[250px] 2xl:h-[160px] sm:ml-2 sm:mt-2 lg:mt-5 xl:mt-2 xl:ml-3  2xl:mt-7 2xl:ml-16" alt="" />
+                  <img src="/assets/67.png" className="lg:w-[250px] lg:h-[90px] xl:w-[200px] xl:h-[110px] 2xl:w-[250px] 2xl:h-[160px] sm:ml-2 sm:mt-2 lg:mt-5 xl:ml-8  xl:mt-2   2xl:mt-7 2xl:ml-16" alt="" />
                   <div className="flex gap-x-5 justify-end sm:my-2 lg:mt-4"> 
                   <IoIosArrowBack color='white' className="lg:w-[18px] lg:h-[18px] xl:w-[25px] xl:h-[25px]"/>
                   <IoIosArrowForward className="lg:w-[18px] lg:h-[18px] xl:w-[25px] xl:h-[25px]" color='white' />
@@ -180,11 +180,11 @@ const HomePage = () => {
                   <img src="/assets/10.png" alt="" className="sm:w-[90px] sm:h-[90px] lg:h-[120px] lg:w-[120px] 2xl:w-[200px] 2xl:h-[200px]"/>
                 </div>
                 
-                <div className="relative flex justify-between items-center sm:mt-5 lg:mt-10 xl:mt-5 2xl:mt-2 3xl:mt-10">
+                <div className="relative flex justify-between items-center sm:mt-5 lg:mt-10 xl:mt-2 2xl:mt-2 3xl:mt-10">
                   <p className='text-[#2E2E2E] tracking-[4px] text-[10px] lg:text-[14px] xl:text-[18px] 2xl:text-[22px]'>FOUNDATION</p>
-                   <p className='text-white opacity-50 tracking-[2px] text-[8px]  lg:text-[10px] xl:text-[14px] 2xl:text-[18px] lg:tracking-[4px]'>TERMS | PRIVACY</p>
+                   <p className='text-white opacity-50 tracking-[2px] text-[8px]  lg:text-[10px] 2xl:text-[18px] lg:tracking-[4px]'>TERMS | PRIVACY</p>
 
-                   <div className="flex items-center gap-x-2 xl:gap-x-5 ">
+                   <div className="flex items-center gap-x-2 xl:gap-x-3 2xl:gap-x-5 ">
                     <img src="/assets/YT.svg" className='opacity-50 w-[15px] h-[10px] lg:w-[20px] lg:h-[14px]  xl:w-[26px] xl:h-[18px]' alt="" />
                     <img src="/assets/V.svg" alt="" className='w-[15px] h-[10px] lg:w-[20px] lg:h-[14px]  xl:w-[26px] xl:h-[18px] opacity-50'/>
                     <img src="/assets/X.svg" alt="" className='w-[15px] h-[10px] lg:w-[20px] lg:h-[14px]  xl:w-[26px] xl:h-[18px] opacity-50'/>

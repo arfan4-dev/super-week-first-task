@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
-import Login from "./Login";
+import Login from "../components/Login";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth } from "@/firbase";
 import { useRouter } from "next/router";
@@ -9,7 +9,6 @@ const Form = () => {
 const [isOpen,setIsOpen]=useState(false);
 const [user,setUser]=useState({});
 const [nullField,setNullField]=useState()
-const router=useRouter();
 
 
 const getUserInput = (e) => {
@@ -21,8 +20,7 @@ const handleRegistration=async(e)=>{
     try{
       if(!user.password) return console.log("password is missing!!");
       await createUserWithEmailAndPassword(auth,user.email,user.password);
-      // router.push('/Login');
-      setNullField('');
+      setNullField('')
       console.log("Submitted")
     }catch(err){
       console.log("Error in registration", err);
@@ -39,7 +37,7 @@ const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    // router.push('/Login');
+    
     console.log('Google Sign-In successful!', user);
   } catch (error) {
     console.error('Error signing in with Google', error);
