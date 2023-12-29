@@ -1,4 +1,4 @@
-import Form from "@/components/Form";
+import Form from "@/components/FormOne";
 import Login from "@/components/Login";
 import Navbar from "@/components/Navbar";
 import Head from "next/head";
@@ -15,11 +15,8 @@ export default function Home() {
       </Head>
 
       <main>
-      <Navbar/>
-     <Form/> 
-  
-    
-        </main>
+      <HomePage/>
+      </main>
     </>
   );
 }

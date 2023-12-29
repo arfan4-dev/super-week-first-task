@@ -7,14 +7,14 @@ import { useRouter } from 'next/router';
 const Login = ({setIsOpen}) => {
   const route=useRouter()
   const [user,setUser]=useState({});
-const [nullField,setNullField]=useState()
+const [nullField,setNullField]=useState();
 
 
-const getUserInput = (e) => {
+const getUserInputForLogin = (e) => {
   const { name, value } = e.target;
   setUser({ ...user, [name]: value });
 };
-const handleRegistration=async(e)=>{
+const handleLogin=async(e)=>{
     e.preventDefault()
     try{
       if(!user.password) return console.log("password is missing!!");
@@ -52,8 +52,8 @@ useEffect(() => {
   return (
     <div className="sm:ml-60 sm:mt-10   md:-mr-40 lg:mr-0 2xl:mr-10 sm:h-[210px] md:h-[370px] lg:h-[400px] xl:h-[470px] 2xl:h-[500px] 3xl:h-[730px]">
     <div className=" sm:w-[230px] sm:h-[25px] 3xl:mt-10 md:w-[250px] md:h-[20px] lg:w-[350px] lg:h-[40px] 2xl:w-[450px] 2xl:h-[63px] flex justify-around">
-    <p className="text-[10px] lg:text-[16px] 2xl:text-[18px] tracking-[2px] cursor-pointer">LOG IN</p>
-    <p className="text-[10px] lg:text-[16px] 2xl:text-[18px] tracking-[2px] text-[#BE9F56] cursor-pointer" onClick={()=>setIsOpen(false)}>CREATE USER ID</p>
+    <p className="text-[10px] lg:text-[16px] 2xl:text-[18px] tracking-[2px] text-[#BE9F56] cursor-pointer">LOG IN</p>
+    <p className="text-[10px] lg:text-[16px] 2xl:text-[18px] tracking-[2px]  cursor-pointer" onClick={()=>setIsOpen(false)}>CREATE USER ID</p>
     </div>
     <div className="flex items-center  xl:justify-start 2xl:justify-center   dark:bg-gray-800">
       <button  onClick={handleGoogleLogin} className="px-6 py-2 border sm:w-[230px] sm:h-[25px] md:w-[250px] md:h-[40px] lg:w-[350px] lg:h-[40px] 2xl:w-[450px] 2xl:h-[63px]  flex justify-between items-center border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">

@@ -4,6 +4,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth } from "@/firbase";
 import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 import Drawer from "react-modern-drawer";
 import { RxCross1 } from "react-icons/rx";
 import { IoIosArrowBack } from "react-icons/io";
@@ -11,23 +12,14 @@ import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowUp,IoIosArrowDown } from "react-icons/io";
 import 'react-modern-drawer/dist/index.css'
 import { CiUser } from "react-icons/ci";
-import Navbar from "@/components/Navbar";
-import { useRouter } from "next/router";
 const Form = () => {
 const [isOpen,setIsOpen]=useState(false);
 const [userLogin,setUserLogin]=useState({});
 const [user,setUser]=useState({});
-const route=useRouter();
 
 const [loader,setLoader]=useState(false);
 const [error, setError] = useState(null);
-
-  const isOpenHandler=()=>{
-    setIsOpen(!isOpen);
-    setUserLogin({ Email: '', PASSWORD: '' });
-    setUser({ email: '', password: '',ORGANIZATION:'',firstName:'',lastName:''});
-
-  }
+// marfanarshad12345@gmail.com
 
 const getUserInputForLogin = (e) => {
   const { name, value } = e.target;
@@ -37,45 +29,51 @@ const getUserInputForLogin = (e) => {
 const handleLogin = async (e) => {
   e.preventDefault();
   setLoader(true);
+
+
   try {
+
+    if (!userLogin.PASSWORD || !userLogin.Email) {
+      setError('Email and Password are required');
+      return;
+    }
 
     if (!userLogin.PASSWORD || !userLogin.Email ) return console.log("Email / Password is missing!!");
     await signInWithEmailAndPassword(auth, userLogin.Email, userLogin.PASSWORD);
+    setNullField('');
+    toast.success('Logging Successfull');
     route.push('/HomePage');
-    toast.success('Logging Successfully');
-    setUserLogin({ Email: '', PASSWORD: '' });
-
-    console.log("Logged in");
+    setUserLogin({ Email: null, PASSWORD: null });
+        console.log("Logged in");
   } catch (err) {
     console.log("Error in Logging", err);
-    toast.error(err.message);
+    toast.error('Logging Error');
   }
 
   setLoader(false);
 };
-
-
-console.log('user.firstName:',user.firstName)
+console.log('userLogin',userLogin)
+console.log("user",user)
 const handleGoogleLogin = async () => {
   try {
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    toast.success('Logging Successfully');
-    route.push('/HomePage');
+    console.log('Google Login successfull!', user);
+    route.push('/HomePage')
 
   } catch (error) {
-    toast.error('Logging Error');
+    console.error('Error logging in with Google', error);
   }
 };
+
 
 
 const getUserInputForSignUp = (e) => {
   const { name, value } = e.target;
   setUser({ ...user, [name]: value });
+  console.log('sign up call')
 };
-
-
 const handleRegistration=async(e)=>{
     e.preventDefault()
     setLoader(true)
@@ -87,10 +85,12 @@ const handleRegistration=async(e)=>{
 
       if(!user.password) return console.log("password is missing!!");
       await createUserWithEmailAndPassword(auth,user.email,user.password);
-      setUser({ email: '', password: '',firstName:'',lastName:'',ORGANIZATION:''});
-      toast.success('Sign up Successfully');
+      toast.success('Sign up Successfull');
+      setUser({ email: '', password: '',ORGANIZATION:'',firstName:'',lastName:''});
+            console.log("Submitted")
     }catch(err){
       toast.error('Registration failed!');
+      console.log("Error in registration", err);
     }
     setLoader(false)
 
@@ -100,14 +100,14 @@ const handleRegistration=async(e)=>{
 
 // Continue with google
 
-const handleGoogleSignUp = async () => {
+const handleGoogleSignIn = async () => {
   try {
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
-    route.push('/HomePage');
-    toast.success('Sign In Successfully');
-    
+    // router.push('/Login');
+    toast.success('Sign up Successfull');
+    console.log('Google Sign-In successful!', user);
   } catch (error) {
     console.error('Error signing in with Google', error);
   }
@@ -139,9 +139,6 @@ useEffect(() => {
   return () => clearInterval(intervalId);
 }, [RcurrentIndex, rightArr.length]);
   return (
-    <div>
-    <Navbar/>
-   
     <div className="flex flex-col justify-between sm:h-[430px] md:h-[400px] lg:h-[530px] xl:h-[475px] 2xl:h-[820px] 3xl:h-[930px]  xl:-mt-5 ">
 
     
@@ -150,34 +147,34 @@ useEffect(() => {
       <div className={`  relative  sm:mt-24  sm:ml-20: 3xl:ml-40 3xl:mt-0 ${isOpen? 'md:mt-5':'md:mt-5'}  2xl:mt-20 xl:mt-10 lg:mt-10  ${isOpen? '3xl:ml-36':'ml-0'} md:ml-10    xl:ml-20 lg:ml-10 ml-5`}>
         <img
           src="/assets/img1.png"
-          className=" sm:w-[90px] sm:h-[110px] md:w-[120px] md:h-[170px] lg:w-[190px] lg:h-[270px] xl:w-[170px] xl:h-[240px]  2xl:w-[264px] 2xl:h-[352px]"
+          className=" sm:w-[90px] sm:h-[110px] md:w-[120px] md:h-[170px] lg:w-[190px] lg:h-[270px] 2xl:w-[264px] 2xl:h-[352px]"
           alt="img1"
         />
         <img
           src="/assets/img2.png"
-          className="sm:w-[70px] sm:h-[80px] md:w-[100px] md:h-[100px]  lg:w-[140px] lg:h-[140px] 2xl:w-[152px] 2xl:h-[152px] absolute sm:top-4 sm:left-14  md:top-[40px] md:left-[70px]  lg:left-[70px] xl:left-[120px] xl:top-[60px] lg:top-[68px]  2xl:top-24 2xl:left-[225px]"
+          className="sm:w-[70px] sm:h-[80px] md:w-[100px] md:h-[100px]  lg:w-[140px] lg:h-[140px] 2xl:w-[152px] 2xl:h-[152px] absolute sm:top-4 sm:left-14  md:top-[40px] md:left-[70px]  lg:left-[70px] xl:left-[120px] lg:top-[68px]  2xl:top-24 2xl:left-[225px]"
           alt="img2"
         />
         <img
           src="/assets/img3.png"
-          className="sm:w-[70px] sm:h-[90px] md:w-[170px] md:h-[130px] lg:w-[250px] lg:h-[174px] xl:w-[160px] xl:h-[174px] 2xl:w-[266px] 2xl:h-[200px] absolute sm:-top-12 sm:left-[98px] md:-top-14 md:left-[132px]  lg:left-[160px] xl:left-[210px] xl:-top-16 lg:-top-14  2xl:-top-14 2xl:left-[299px]"
+          className="sm:w-[70px] sm:h-[90px] md:w-[170px] md:h-[130px] lg:w-[250px] lg:h-[174px] 2xl:w-[266px] 2xl:h-[200px] absolute sm:-top-12 sm:left-[98px] md:-top-14 md:left-[132px]  lg:left-[160px] xl:left-[200px] lg:-top-14  2xl:-top-14 2xl:left-[299px]"
           alt="img3"
         />
       </div>
 
       <div className={`3xl:-mt-14 xl:mt-2 xl:ml-56 bg-cyan  ${isOpen? '':'sm:-mt-14'} ${isOpen? 'sm:ml-56':'sm:ml-56'}    3xl:ml-52 2xl:mt-8  lg:ml-44 lg:mr-5 lg:mt-0  2xl:ml-72  md:mt-0 md:ml-32     `}>
-        <img src="/assets/img4.png" alt="ZFTR" className={`sm:w-[100px] sm:h-[15px] md:w-[130px] md:h-[15px] lg:w-[200px] lg:[h-20px] xl:w-[170px] xl:[h-25px] 2xl:w-[250px] 2xl:h-[30px] 3xl:w-[355px] 3xl:h-[35px]`} />
+        <img src="/assets/img4.png" alt="ZFTR" className={`sm:w-[100px] sm:h-[15px] md:w-[130px] md:h-[15px] lg:w-[200px] lg:[h-20px]  2xl:w-[250px] 3xl:w-[355px] 2xl:h-[35px]`} />
       </div>
 
 
 
       <div className={ `  sm:ml-[52%] sm:-mt-32    ${isOpen&& 'sm:h-[220px]'}  ${isOpen&& 'md:h-[382px]'}  ${isOpen&& 'lg:h-[414px]'} ${isOpen&& 'xl:h-[414px]'} ${isOpen&& '2xl:h-[654px]'} ${isOpen? '':'sm:mt-5'} :'3xl:mr-10 sm:ml-60 md:ml-0 md:mt-0  md:-mr-40 lg:mr-0 `}>
         <div className="sm:w-[220px] sm:h-[20px] md:w-[250px] md:h-[20px] lg:w-[350px] lg:h-[40px] 2xl:w-[450px] 2xl:h-[63px] flex justify-around">
-        <p onClick={isOpenHandler} className={`text-[10px] lg:text-[16px] 2xl:text-[18px] tracking-[2px] cursor-pointer ${isOpen&& 'text-[#BE9F56]'}`}>LOG IN</p>
-        <p className={`text-[10px] lg:text-[16px] 2xl:text-[18px] tracking-[2px] ${!isOpen&& 'text-[#BE9F56]'} cursor-pointer`} onClick={isOpenHandler}>CREATE USER ID</p>
+        <p onClick={() => { setIsOpen(true); }} className={`text-[10px] lg:text-[16px] 2xl:text-[18px] tracking-[2px] cursor-pointer ${isOpen&& 'text-[#BE9F56]'}`}>LOG IN</p>
+        <p className={`text-[10px] lg:text-[16px] 2xl:text-[18px] tracking-[2px] ${!isOpen&& 'text-[#BE9F56]'} cursor-pointer`} onClick={() => { setIsOpen(false);  }}>CREATE USER ID</p>
         </div>
         <div className="flex items-center justify-between  md:justify-start 2xl:justify-center   dark:bg-gray-800">
-          <button onClick={isOpen?handleGoogleLogin:handleGoogleSignUp} className="px-6 py-2 border sm:w-[230px] sm:h-[25px] md:w-[250px] md:h-[40px] lg:w-[350px] lg:h-[40px] 2xl:w-[450px] 2xl:h-[63px]  flex justify-between items-center border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
+          <button onClick={isOpen?handleGoogleLogin:handleGoogleSignIn} className="px-6 py-2 border sm:w-[230px] sm:h-[25px] md:w-[250px] md:h-[40px] lg:w-[350px] lg:h-[40px] 2xl:w-[450px] 2xl:h-[63px]  flex justify-between items-center border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
             <img
               className="sm:w-[19px] md:w-[19px] md:h-[20px] lg:w-[28px] lg:h-[29px] 2xl:w-[38px] 2xl:h-[39px]"
               src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -201,7 +198,8 @@ useEffect(() => {
               name={isOpen?"Email":"email"}
               className="sm:w-[230px] sm:h-[25px] md:w-[250px] md:h-[40px] text-[10px]  lg:w-[350px] lg:h-[40px] 2xl:w-[450px] 2xl:h-[63px]  border border-gray-300 text-[#000000] lg:text-[12px] 2xl:text-[18px] rounded-md focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#000000] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="EMAIL"
-              value={isOpen ? userLogin.Email : user.email}
+              value={isOpen?userLogin.Email:user.email}
+
               required
             />
           </div>
@@ -214,7 +212,7 @@ useEffect(() => {
               id="firstName"
               name="firstName"
               className="sm:w-[230px] sm:h-[25px] md:w-[250px] md:h-[40px] text-[10px]  lg:w-[350px] lg:h-[40px] 2xl:w-[450px] 2xl:h-[63px]  border border-gray-300 text-[#000000] lg:text-[12px] 2xl:text-[18px] rounded-md focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#000000] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              // value={ user.firstName}
+              value={user.firstName}
               placeholder="FIRST NAME"
               required
             />
@@ -227,7 +225,7 @@ useEffect(() => {
               name="lastName"
               className="sm:w-[230px] sm:h-[25px]  md:w-[250px] md:h-[40px] text-[10px]  lg:w-[350px] lg:h-[40px] 2xl:w-[450px] 2xl:h-[63px]  border border-gray-300 text-[#000000] lg:text-[12px] 2xl:text-[18px] rounded-md focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#000000] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="LAST NAME"
-              // value={user.lastName}
+              value={user.lastName}
 
               required
             />
@@ -240,7 +238,7 @@ useEffect(() => {
               name="ORGANIZATION"
               className="sm:w-[230px] sm:h-[25px] md:w-[250px] md:h-[40px] text-[10px]  lg:w-[350px] lg:h-[40px] 2xl:w-[450px] 2xl:h-[63px]  border border-gray-300 text-[#000000] lg:text-[12px] 2xl:text-[18px] rounded-md focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#000000] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="ORGANIZATION (OPTIONAL)"
-              // value={user.ORGANIZATION}
+              value={user.ORGANIZATION}
             />
           </div></div>
 }
@@ -252,7 +250,7 @@ useEffect(() => {
               name={isOpen?"PASSWORD":"password"}
               className="sm:w-[230px] sm:h-[25px] md:w-[250px] md:h-[40px] text-[10px]  lg:w-[350px] lg:h-[40px] 2xl:w-[450px] 2xl:h-[63px]  border border-gray-300 text-[#000000] lg:text-[12px] 2xl:text-[18px] rounded-md focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 placeholder-[#000000] dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="PASSWORD"
-              value={isOpen ? userLogin.PASSWORD : user.password}
+              value={isOpen ? userLogin.password : user.password}
                required
             />
           </div>
@@ -348,14 +346,14 @@ useEffect(() => {
                     </div>
               
              <div className="leading-[20px] lg:leading-[26px] xl:leading-[28px] 2xl:leading-[55px] 3xl:leading-[60px] tracking-[2px]">
-             <p className="text-right text-[10px] lg:text-[14px] xl:text-[16px] tracking-[2px] text-white">FEATURES</p>
-              <p className="text-right text-[10px] lg:text-[14px] xl:text-[16px] text-white tracking-[2px]">PRODUCTS</p>
-              <p className="text-right text-[10px] lg:text-[14px] xl:text-[16px] text-white tracking-[2px]">HOW TO <span className="text-[#474646]">ZTFR</span> </p>
-              <p className="text-right text-[10px] lg:text-[14px] xl:text-[16px] text-white tracking-[2px]">PRODUCTS</p>
-              <p className="text-right text-[10px] lg:text-[14px]  xl:text-[16px] text-white tracking-[2px]">ADVERTISING</p>
-              <p className="text-right text-[10px] lg:text-[14px]  xl:text-[16px] text-white tracking-[2px]">COMPANY</p>
-              <p className="text-right text-[10px] lg:text-[14px]  xl:text-[16px] text-white tracking-[2px]">MY ACCOUNT</p>
-              <p className="text-right text-[10px] lg:text-[14px]  xl:text-[16px] text-white tracking-[2px]">NEWSROOM/PRESS</p>
+             <p className="text-right text-[10px] lg:text-[14px] xl:text-[16px] text-white">FEATURES</p>
+              <p className="text-right text-[10px] lg:text-[14px] xl:text-[16px] text-white">PRODUCTS</p>
+              <p className="text-right text-[10px] lg:text-[14px] xl:text-[16px] text-white">HOW TO ZTFR</p>
+              <p className="text-right text-[10px] lg:text-[14px] xl:text-[16px] text-white">PRODUCTS</p>
+              <p className="text-right text-[10px] lg:text-[14px]  xl:text-[16px] text-white">ADVERTISING</p>
+              <p className="text-right text-[10px] lg:text-[14px]  xl:text-[16px] text-white">COMPANY</p>
+              <p className="text-right text-[10px] lg:text-[14px]  xl:text-[16px] text-white">MY ACCOUNT</p>
+              <p className="text-right text-[10px] lg:text-[14px]  xl:text-[16px] text-white">NEWSROOM/PRESS</p>
              </div>
 
             </div>
@@ -364,19 +362,19 @@ useEffect(() => {
 
                 <div className="flex mt-5 xl:mt-2 2xl:mt-0">
                   <img src="/assets/5.png"  className="sm:w-[100px] sm:h-[100px] lg:w-[120px] lg:h-[120px] 2xl:w-[200px] 2xl:h-[200px]"  alt="5" />
-                  <div className="flex flex-col gap-y-5  sm:mx-1 2xl:mx-2 3xl:mx-5  xl:mx-4 mr-2 xl:mt-14 3xl:mr-3   2xl:mt-32"> 
+                  <div className="flex flex-col gap-y-5  sm:mx-1 2xl:mx-2 3xl:mx-5  xl:mx-4 mr-2 xl:mt-14 2xl:mt-32"> 
 
-                  <IoIosArrowUp color='#777777' className="w-[10px] h-[10px] lg:w-[18px] lg:h-[18px] xl:w-[25px] xl:h-[25px]" />
-                  <IoIosArrowDown className="w-[10px] h-[10px] lg:w-[18px] lg:h-[18px] xl:w-[25px] xl:h-[25px]" color='#777777' />
+                  <IoIosArrowUp color='white' className="w-[10px] h-[10px] lg:w-[18px] lg:h-[18px] xl:w-[25px] xl:h-[25px]" />
+                  <IoIosArrowDown className="w-[10px] h-[10px] lg:w-[18px] lg:h-[18px] xl:w-[25px] xl:h-[25px]" color='white' />
 
                   </div>
                   
                   <img src="/assets/6.png" className="sm:w-[140px] sm:h-[100px] lg:w-[180px] lg:h-[120px] 2xl:w-[334px] 2xl:h-[200px]" alt="6" />
                   <div>
-                  <img src="/assets/67.png" className="lg:w-[250px] lg:h-[90px] xl:w-[200px] xl:h-[110px] 2xl:w-[250px] 2xl:h-[160px] 3xl:w-[260px] 3xl:h-[160px] sm:ml-2 sm:mt-2 lg:mt-5 xl:ml-8  xl:mt-2   2xl:mt-7 2xl:ml-16" alt="" />
+                  <img src="/assets/67.png" className="lg:w-[250px] lg:h-[90px] xl:w-[200px] xl:h-[110px] 2xl:w-[250px] 2xl:h-[160px] sm:ml-2 sm:mt-2 lg:mt-5 xl:ml-8  xl:mt-2   2xl:mt-7 2xl:ml-16" alt="" />
                   <div className="flex gap-x-5 justify-end sm:my-2 lg:mt-4"> 
-                  <IoIosArrowBack color='#777777' className="lg:w-[18px] lg:h-[18px] xl:w-[25px] xl:h-[25px]"/>
-                  <IoIosArrowForward className="lg:w-[18px] lg:h-[18px] xl:w-[25px] xl:h-[25px]" color='#777777' />
+                  <IoIosArrowBack color='white' className="lg:w-[18px] lg:h-[18px] xl:w-[25px] xl:h-[25px]"/>
+                  <IoIosArrowForward className="lg:w-[18px] lg:h-[18px] xl:w-[25px] xl:h-[25px]" color='white' />
 
                   </div>
                   </div>
@@ -389,22 +387,22 @@ useEffect(() => {
                 <div className="flex items-center justify-between lg:mt-5 xl:-mt-9 2xl:mt-2 3xl:mt-10">
                   <img src="/assets/8.png" className="sm:w-[90px] sm:h-[90px] lg:h-[120px] lg:w-[120px]  2xl:w-[200px] 2xl:h-[200px]" alt="" />
                   <img src="/assets/9.png" alt="" className="sm:w-[90px] sm:h-[90px] lg:h-[120px] lg:w-[120px] 2xl:w-[200px] 2xl:h-[200px]"/>
-                  <img src="/assets/11.png" alt="" className="sm:w-[90px] sm:h-[90px] lg:h-[120px] lg:w-[120px] 2xl:w-[200px] 2xl:h-[200px]"/>
+                  <img src="/assets/9.png" alt="" className="sm:w-[90px] sm:h-[90px] lg:h-[120px] lg:w-[120px] 2xl:w-[200px] 2xl:h-[200px]"/>
                   <img src="/assets/10.png" alt="" className="sm:w-[90px] sm:h-[90px] lg:h-[120px] lg:w-[120px] 2xl:w-[200px] 2xl:h-[200px]"/>
                 </div>
                 
                 <div className="relative flex justify-between items-center sm:mt-5 lg:mt-10 xl:mt-0 2xl:mt-2 3xl:mt-10">
-                  <p className='text-[#2E2E2E] tracking-[4px] text-[10px] lg:text-[14px] xl:text-[18px] 2xl:text-[22px] lg:ml-3 xl:ml-8'>FOUNDATION</p>
+                  <p className='text-[#2E2E2E] tracking-[4px] text-[10px] lg:text-[14px] xl:text-[18px] 2xl:text-[22px]'>FOUNDATION</p>
                    <p className='text-white opacity-50 tracking-[2px] text-[8px]  lg:text-[10px] 2xl:text-[18px] lg:tracking-[4px]'>TERMS | PRIVACY</p>
 
-                   <div className="flex items-center gap-x-2 xl:gap-x-3 2xl:gap-x-3 ">
-                    <img src="/assets/YT.svg" className='opacity-50 w-[10px] h-[10px] lg:w-[18px] lg:h-[14px]  xl:w-[20px] xl:h-[18px]' alt="" />
-                    <img src="/assets/V.svg" alt="" className='w-[10px] h-[10px] lg:w-[18px] lg:h-[14px]  xl:w-[20px] xl:h-[18px] opacity-50'/>
-                    <img src="/assets/X.svg" alt="" className='w-[10px] h-[10px] lg:w-[18px] lg:h-[14px]  xl:w-[20px] xl:h-[18px] opacity-50'/>
-                    <img src="/assets/f.svg" alt="" className=' w-[10px] h-[10px] lg:w-[12px] lg:h-[14px]  xl:w-[18px] xl:h-[18px] opacity-50'/>
-                    <img src="/assets/insta.svg" alt="" className='w-[10px] h-[10px] lg:w-[14px] lg:h-[14px]  xl:w-[20px] xl:h-[18px] opacity-50'/>
-                    <img src="/assets/Tiktok.svg" alt="" className='w-[10px] h-[10px] lg:w-[18px] lg:h-[14px]  xl:w-[20px] xl:h-[18px] opacity-50'/>
-                    <img src="/assets/O.svg" alt=""className='w-[10px] h-[10px] lg:w-[18px] lg:h-[14px]  xl:w-[20px] xl:h-[18px]  opacity-50' />
+                   <div className="flex items-center gap-x-2 xl:gap-x-3 2xl:gap-x-5 ">
+                    <img src="/assets/YT.svg" className='opacity-50 w-[15px] h-[10px] lg:w-[20px] lg:h-[14px]  xl:w-[26px] xl:h-[18px]' alt="" />
+                    <img src="/assets/V.svg" alt="" className='w-[15px] h-[10px] lg:w-[20px] lg:h-[14px]  xl:w-[26px] xl:h-[18px] opacity-50'/>
+                    <img src="/assets/X.svg" alt="" className='w-[15px] h-[10px] lg:w-[20px] lg:h-[14px]  xl:w-[26px] xl:h-[18px] opacity-50'/>
+                    <img src="/assets/f.svg" alt="" className=' w-[15px] h-[10px] lg:w-[20px] lg:h-[14px]  xl:w-[26px] xl:h-[18px] opacity-50'/>
+                    <img src="/assets/insta.svg" alt="" className='w-[15px] h-[10px] lg:w-[20px] lg:h-[14px]  xl:w-[26px] xl:h-[18px] opacity-50'/>
+                    <img src="/assets/Tiktok.svg" alt="" className='w-[15px] h-[10px] lg:w-[20px] lg:h-[14px]  xl:w-[26px] xl:h-[18px] opacity-50'/>
+                    <img src="/assets/O.svg" alt=""className='w-[15px] h-[10px] lg:w-[20px] lg:h-[14px]  xl:w-[26px] xl:h-[18px]  opacity-50' />
                    </div>
                   </div>
               </nav>
@@ -429,7 +427,7 @@ RcurrentIndex===1 ? <div  onClick={setIsDrawerOpen} className="sm:absolute sm:to
      </div>
  </div>
 
-    <FaArrowLeft className={`2xl:w-[30px] 2xl:h-[22px] sm:ml-5  md:-mt-6   xl:-mt-14 lg:mt-5 lg:ml-5 ${!isOpen && "md:ml-5"}  ${isOpen?"":"xl:-mt-5"}  2xl:-mt-16 2xl:ml-10 3xl:mt-5 md:-mt-[40px] ${isOpen?"md:ml-5":""} xl:ml-10   cursor-pointer`}/> 
+    <FaArrowLeft className={`2xl:w-[30px] 2xl:h-[22px] sm:ml-5  md:-mt-6   xl:-mt-10 lg:mt-5 lg:ml-5 ${!isOpen && "md:ml-5"}  ${isOpen?"":"xl:-mt-5"}  2xl:-mt-16 2xl:ml-10 3xl:mt-5 md:-mt-[40px] ${isOpen?"md:ml-5":""} xl:ml-10   cursor-pointer`}/> 
     </div>
 
     <footer className="leading-[10px] lg:leading-[15px] xl:leading-[20px] 2xl:leading-[30px]  2xl:mt-0">
@@ -445,8 +443,6 @@ RcurrentIndex===1 ? <div  onClick={setIsDrawerOpen} className="sm:absolute sm:to
     
           </div>
        </footer>
-    </div>
-
     </div>
   );
 };
