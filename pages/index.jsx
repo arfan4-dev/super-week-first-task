@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Head from "next/head";
 import HomePage from "./HomePage";
 import Link from "next/link";
+import Sidebar from "@/components/Sidebar";
 
 export default function Home() {
   
@@ -16,6 +17,7 @@ export default function Home() {
 
       <main>
       <HomePage/>
+      {/* <Sidebar/> */}
       </main>
     </>
   );

@@ -11,9 +11,7 @@ import { auth } from "@/firbase";
 import toast from "react-hot-toast";
 import Drawer from "react-modern-drawer";
 import { RxCross1 } from "react-icons/rx";
-import { IoIosArrowBack } from "react-icons/io";
-import { IoIosArrowForward } from "react-icons/io";
-import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowUp,IoIosArrowForward,IoIosArrowBack, IoIosArrowDown } from "react-icons/io";
 import "react-modern-drawer/dist/index.css";
 import { CiUser } from "react-icons/ci";
 import Navbar from "@/components/Navbar";
@@ -68,7 +66,6 @@ const Form = () => {
     setLoader(false);
   };
 
-  console.log("user.firstName:", user.firstName);
   const handleGoogleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -125,10 +122,9 @@ const Form = () => {
     }
   };
 
-  console.log(isOpen);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const toggleDrawer = () => {
-    setIsOpen((prevState) => !prevState);
+    setIsDrawerOpen(true);
   };
   useEffect(() => {
     const debounceTimeout = setTimeout(() => {
@@ -152,11 +148,11 @@ const Form = () => {
     <div>
       <Navbar />
 
-      <div className="flex flex-col justify-between sm:h-[430px] md:h-[400px] lg:h-[530px] xl:h-[475px] 2xl:h-[820px] 3xl:h-[890px]  xl:-mt-5 ">
-        <div className="  sm:h-[300px] md:h-[350px] lg:h-[400px] xl:h-[480px]  2xl:h-[800px]">
-          <div className="bg-red overflow-hidden block md:flex bg-slate00 md:h-[400px] lg:h-[400px] xl:h-[480px]  2xl:h-[800px]  justify-between items-center md:-mt-5 lg:mt-0 xl:-mt-10">
+      <div className="flex flex-col justify-between h-[100%] xl:-mt-5 ">
+        <div className=" sm:h-[400px] md:h-[390px] lg:h-[500px] xl:h-[440px]  2xl:h-[800px] 3xl:h-[900px]">
+          <div className=" overflow-hidden block md:flex  md:h-[400px] lg:h-[400px] xl:h-[480px]  2xl:h-[800px]   justify-between items-center md:-mt-5 lg:mt-0 xl:-mt-10">
             <div
-              className={`  relative  sm:mt-24  sm:ml-20: 3xl:ml-40 3xl:mt-0 ${
+              className={` xl:w-[20%]  relative  sm:mt-24  sm:ml-20: 3xl:ml-40 3xl:mt-0 ${
                 isOpen ? "md:mt-5" : "md:mt-5"
               }  2xl:mt-20 xl:mt-10 lg:mt-10  ${
                 isOpen ? "3xl:ml-36" : "ml-0"
@@ -164,17 +160,17 @@ const Form = () => {
             >
               <img
                 src="/assets/img1.png"
-                className=" sm:w-[90px] sm:h-[110px] md:w-[120px] md:h-[170px] lg:w-[190px] lg:h-[270px] xl:w-[170px] xl:h-[240px]  2xl:w-[264px] 2xl:h-[352px]"
+                className=" sm:w-[100px] sm:h-[120px] md:w-[120px] md:h-[170px] lg:w-[190px] lg:h-[240px] xl:w-[170px] xl:h-[240px]  2xl:w-[264px] 2xl:h-[352px]"
                 alt="img1"
               />
               <img
                 src="/assets/img2.png"
-                className="sm:w-[70px] sm:h-[80px] md:w-[100px] md:h-[100px]  lg:w-[140px] lg:h-[140px] 2xl:w-[152px] 2xl:h-[152px] absolute sm:top-4 sm:left-14  md:top-[40px] md:left-[70px]  lg:left-[70px] xl:left-[100px] xl:top-[60px] lg:top-[68px]  2xl:top-24 2xl:left-[225px]"
+                className="sm:w-[90px] sm:h-[80px] md:w-[100px] md:h-[100px]  lg:w-[140px] lg:h-[140px] 2xl:w-[152px] 2xl:h-[152px] absolute sm:top-4 sm:left-14  md:top-[40px] md:left-[70px]  lg:left-[70px] xl:left-[100px] xl:top-[60px] lg:top-[68px]  2xl:top-24 2xl:left-[225px]"
                 alt="img2"
               />
               <img
                 src="/assets/img3.png"
-                className="sm:w-[70px] sm:h-[90px] md:w-[170px] md:h-[130px] lg:w-[250px] lg:h-[174px] xl:w-[160px] xl:h-[174px] 2xl:w-[266px] 2xl:h-[200px] absolute sm:-top-12 sm:left-[98px] md:-top-14 md:left-[132px]  lg:left-[160px] xl:left-[190px] xl:-top-16 lg:-top-14  2xl:-top-14 2xl:left-[299px]"
+                className="sm:w-[120px] sm:h-[90px] md:w-[170px] md:h-[130px] lg:w-[250px] lg:h-[174px]  xl:h-[174px] xl:w-[266px] 2xl:h-[200px] absolute sm:-top-12 sm:left-[98px] md:-top-14 md:left-[132px]  lg:left-[160px] xl:left-[190px] xl:-top-16 lg:-top-14  2xl:-top-14 2xl:left-[299px]"
                 alt="img3"
               />
             </div>
@@ -332,36 +328,36 @@ const Form = () => {
 
             <div>
             <Drawer
-                open={isOpen}
+                open={isDrawerOpen}
                 overlayColor="#000"
                 enableOverlay={true}
                 onClose={toggleDrawer}
                 direction="right"
                 className=""
               >
-                {isOpen && (
+                {isDrawerOpen && (
                   <nav
-                    className={`absolute top-0 right-0 bg-[#1A1A1A] p-5 sm:w-[490px] sm:h-[640px] md:w-[490px] md:h-[520px]    lg:h-[700px] lg:w-[580px] xl:w-[610px] xl:h-[610px] 2xl:w-[960px] 2xl:h-[1025px] 3xl:w-[912px] 3xl:h-[1080px]`}
+                    className={`absolute top-0 right-0  bg-[#1A1A1A] p-5 sm:w-[490px] md:w-[490px] md:h-[520px] lg:w-[580px] xl:w-[610px] 2xl:w-[960px] 3xl:w-[980px] md:min-h-[100vh]`}
                   >
-                    <div className="flex  items-start gap-x-10">
-                      <div className="flex flex-col items-start sm:gap-y-0 md:gap-y-0 lg:gap-y-0  xl:gap-y-0 2xl:gap-y-0 ">
+                    <div className="flex  items-start gap-x-10 2xl:mt-5 3xl:mt-8">
+                      <div className="flex flex-col items-start  ">
                         <div
                           className={`flex items-center gap-x-10 hover:cursor-pointer `}
                         >
                           <RxCross1
                             color="white"
-                            className="w-[15px] h-[15px] lg:w-[20px] lg:h-[20px] "
+                            className="w-[15px] h-[15px] lg:w-[20px] lg:h-[20px] 3xl:-mt-5"
                             onClick={() => {
-                              setIsOpen(false);
+                              setIsDrawerOpen(false);
                             }}
                           />
-                          <p className="text-white  -mt-5 text-[10px] lg:text-[14px] tracking-[2px]">
+                          <p className="text-white  text-[10px] lg:text-[14px] tracking-[2px]">
                             MENU
                           </p>
                         </div>
                         <img
                           src="/assets/1.png"
-                          className="sm:w-[100px] sm:h-[100px] md:w-[110px] md:h-[100px] lg:w-[120px] lg:h-[120px] xl:w-[120px] xl:h-[120px] 2xl:w-[180px] 2xl:h-[180px] 3xl:w-[200px] 3xl:h-[200px] sm:mt-3 sm:mb-3  lg:mt-6 lg:mb-6 xl:mt-3 xl:mb-3  2xl:mt-10 2xl:mb-10"
+                          className="sm:w-[100px] sm:h-[100px] md:w-[110px] md:h-[100px] lg:w-[120px] lg:h-[120px] xl:w-[120px] xl:h-[120px] 2xl:w-[180px] 2xl:h-[180px] 3xl:w-[200px] 3xl:h-[200px] sm:mt-3 sm:mb-3  lg:mt-6 lg:mb-6 xl:mt-3 xl:mb-3  2xl:mt-14 2xl:mb-10"
                           alt="1"
                         />
                         <img
@@ -371,24 +367,26 @@ const Form = () => {
                         />
                       </div>
 
-                      <div className="flex flex-col items-center sm:gap-y-6 md:gap-y-[22px] lg:gap-y-10 xl:gap-y-3 sm:-ml-5 md:ml-0  2xl:gap-y-0 3xl:gap-y-2">
+                      <div className="flex flex-col items-center sm:gap-y-6 md:gap-y-[22px] lg:gap-y-10 xl:gap-y-3 sm:-ml-5 md:ml-0  2xl:gap-y-0 3xl:gap-y-5">
                         <img
                           src="/assets/ZITRANSFER_White.png"
-                          className="sm:w-[120px]   lg:w-[150px] 2xl:w-[233px] 2xl:h-[20px] xl:w-[150px]  xl:h-[15px] sm:mt-4  md:mt-6 lg:mt-7 xl:mt-5 2xl:mt-6 3xl:mt-10 2xl:ml-14 2xl:mb-11"
+                          className="sm:w-[120px]   lg:w-[150px] 2xl:w-[233px] 2xl:h-[20px] xl:w-[150px]  xl:h-[15px] sm:mt-4  md:mt-6 lg:mt-9 xl:mt-5 2xl:mt-6 3xl:mt-7 2xl:ml-14 2xl:mb-16"
                           alt="ZITRANSFER"
                         />
                         <img
                           src="/assets/3.png"
                           alt=""
-                          className="sm:w-[320px] sm:h-[185px]  lg:w-[300px] lg:h-[230px] xl:w-[250px] xl:h-[230px] 2xl:w-[380px] 2xl:h-[380px] 3xl:w-[400px] 3xl:h-[400px]  md:-ml-6 lg:-ml-0 xl:ml-0 2xl:ml-5  rounded-[20px]"
+                          className="sm:w-[320px] sm:h-[185px]  lg:w-[300px] lg:h-[230px] xl:w-[250px] xl:h-[230px] 2xl:w-[360px] 2xl:h-[360px] 3xl:w-[400px] 3xl:h-[400px]  md:-ml-6 lg:-ml-0 xl:ml-0 2xl:ml-5  rounded-[20px]"
                         />
                       </div>
 
-                      <div className="flex flex-col items-end  mt-8 gap-x-4 ">
-                        <div className="flex items-center  gap-x-4 sm:ml-11 sm:-mt-[18px] sm:mb-2  xl:ml-28 2xl:ml-40 3xl:ml-24 3xl:mr-5 3xl:-mt-3 md:-mt-[12px] lg:-mt-3 xl:-mt-4 xl:mb-2 2xl:-mt-6 2xl:mb-5">
+                      <div className="flex flex-col items-end  mt-6 gap-x-4 ">
+                        <div className="flex items-center  gap-x-4 sm:ml-11 sm:-mt-[18px] sm:mb-2  xl:ml-28 2xl:ml-40 3xl:ml-28  3xl:-mt-3 md:-mt-[12px] lg:-mt-3 xl:-mt-4 xl:mb-2 2xl:-mt-6 2xl:mb-5">
                           <CiUser
                             color="white"
-                            className="sm:text-[20px] md:text-[16px] 2xl:text-[25px]"
+                            className="sm:text-[20px] md:text-[16px] 2xl:text-[25px] cursor-pointer"
+                            onClick={()=>{route.push("/Form");
+                          }}
                           />
                           <img
                             src="assets/UK.svg"
@@ -397,36 +395,36 @@ const Form = () => {
                           />
                         </div>
 
-                        <div className="leading-[25px] md:leading-[26px] lg:leading-[35px] xl:leading-[30px] 2xl:leading-[52px] 3xl:leading-[55px] 3xl:mr-5   tracking-[2px]">
-                          <p className="text-right text-[7px] md:text-[10px] lg:text-[10px] xl:text-[16px] tracking-[2px] text-white">
+                        <div className="leading-[27px] md:leading-[26px] lg:leading-[37px] xl:leading-[31px] 2xl:leading-[54px] 3xl:leading-[60px] 3xl:mr-0   tracking-[2px]">
+                          <p className="text-right text-[7px] md:text-[10px] lg:text-[10px] xl:text-[16px] tracking-[4px] text-white">
                             FEATURES
                           </p>
-                          <p className="text-right text-[7px] md:text-[8px] lg:text-[10px] xl:text-[16px] text-white tracking-[2px]">
+                          <p className="text-right text-[7px] md:text-[8px] lg:text-[10px] xl:text-[16px] text-white tracking-[4px]">
                             PRODUCTS
                           </p>
-                          <p className="text-right text-[7px] md:text-[8px] lg:text-[10px] xl:text-[16px] text-white tracking-[2px]">
+                          <p className="text-right text-[7px] md:text-[8px] lg:text-[10px] xl:text-[16px] text-white tracking-[4px]">
                             HOW TO <span className="text-[#474646]">ZTFR</span>{" "}
                           </p>
-                          <p className="text-right text-[7px] md:text-[8px] lg:text-[10px] xl:text-[16px] text-white tracking-[2px]">
+                          <p className="text-right text-[7px] md:text-[8px] lg:text-[10px] xl:text-[16px] text-white tracking-[4px]">
                             PRODUCTS
                           </p>
-                          <p className="text-right text-[7px] md:text-[8px] lg:text-[10px]  xl:text-[16px] text-white tracking-[2px]">
+                          <p className="text-right text-[7px] md:text-[8px] lg:text-[10px]  xl:text-[16px] text-white tracking-[4px]">
                             ADVERTISING
                           </p>
-                          <p className="text-right text-[7px] md:text-[8px] lg:text-[10px]  xl:text-[16px] text-white tracking-[2px]">
+                          <p className="text-right text-[7px] md:text-[8px] lg:text-[10px]  xl:text-[16px] text-white tracking-[4px]">
                             COMPANY
                           </p>
-                          <p className="text-right text-[7px] md:text-[8px] lg:text-[10px]  xl:text-[16px] text-white tracking-[2px]">
+                          <p className="text-right text-[7px] md:text-[8px] lg:text-[10px]  xl:text-[16px] text-white tracking-[4px]">
                             MY ACCOUNT
                           </p>
-                          <p className="text-right text-[7px] md:text-[8px] lg:text-[10px]  xl:text-[16px] text-white tracking-[2px]">
+                          <p className="text-right text-[7px] md:text-[8px] lg:text-[10px]  xl:text-[16px] text-white tracking-[4px]">
                             NEWSROOM/PRESS
                           </p>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex sm:mt-3 md:-mt-2 lg:mt-0 xl:mt-1 2xl:mt-0 3xl:mt-2">
+                    <div className="flex sm:mt-1 md:mt-2 lg:mt-0 xl:mt-1 2xl:mt-0 3xl:mt-0">
                       <img
                         src="/assets/5.png"
                         className="sm:w-[94px] sm:h-[100px] lg:w-[112px] lg:h-[120px] 2xl:w-[200px] 2xl:h-[200px]"
@@ -451,7 +449,7 @@ const Form = () => {
                       <div>
                         <img
                           src="/assets/67.png"
-                          className="sm:w-[160px] sm:h-[80px] lg:w-[170px] lg:h-[90px] xl:w-[190px] xl:h-[90px] 2xl:w-[290px] 2xl:h-[160px] 3xl:w-[260px] 3xl:h-[160px] sm:ml-3 sm:mt-3 lg:mt-5 xl:ml-8  xl:mt-3   2xl:mt-7 2xl:ml-5"
+                          className="sm:w-[160px] sm:h-[80px] lg:w-[170px] lg:h-[90px] xl:w-[190px] xl:h-[90px] 2xl:w-[290px] 2xl:h-[160px] 3xl:w-[260px] 3xl:h-[160px] sm:ml-3 sm:mt-3 lg:mt-5 xl:ml-8  xl:mt-3   2xl:mt-7 2xl:ml-10"
                           alt=""
                         />
                         <div className="flex gap-x-5 justify-end sm:my-1 lg:mt-1 xl:mt-1 2xl:mt-4">
@@ -471,7 +469,7 @@ const Form = () => {
                           <FaLock color="black" size={10}/>
                           <p className="text-[8px] tracking-[1.7px]"> ZITRANSFER USES ADVANCED ENCRIPTION STANDARD (AES) 256-BIT TO PROTECT THE CONFIDENTIALITY OF THE DATA YOU UPLOAD. </p>
                         </div> */}
-                    <div className="flex items-center justify-between sm:-mt-0 md:mt-0 lg:mt-2 xl:mt-1 2xl:mt-2 3xl:mt-2">
+                    <div className="flex items-center justify-between sm:mt-1 md:mt-2 lg:mt-3 xl:mt-1 2xl:mt-2 3xl:mt-5">
                       <img
                         src="/assets/8.png"
                         className="sm:w-[94px] sm:h-[100px] lg:h-[120px] lg:w-[112px]  2xl:w-[200px] 2xl:h-[200px]"
@@ -494,15 +492,15 @@ const Form = () => {
                       />
                     </div>
 
-                    <div className="relative flex justify-between items-center sm:mt-2 lg:mt-5 xl:mt-2 2xl:mt-5 3xl:mt-8">
-                      <p className="text-[#2E2E2E] tracking-[2px] lg:tracking-[4px] 2xl:tracking-[5px] text-[10px] lg:text-[14px] xl:text-[12px] 2xl:text-[22px] sm:ml-5 lg:ml-5 2xl:ml-9">
+                    <div className="relative flex justify-between items-center sm:mt-3 lg:mt-7 xl:mt-3 2xl:mt-5 3xl:mt-10">
+                      <p className="text-[#2E2E2E] tracking-[2px] lg:tracking-[4px] 2xl:tracking-[5px] text-[10px] lg:text-[14px] xl:text-[12px] 2xl:text-[20px] sm:ml-5 lg:ml-5 2xl:ml-9">
                         FOUNDATION
                       </p>
                       <p className="text-white opacity-50 tracking-[2px] text-[8px]  lg:text-[10px]  2xl:text-[16px] lg:tracking-[5px]">
                         TERMS | PRIVACY
                       </p>
 
-                      <div className="flex items-center gap-x-2 xl:gap-x-2 2xl:gap-x-[14px] xl:mr-3 2xl:mr-5 ">
+                      <div className="flex items-center gap-x-2 xl:gap-x-2 2xl:gap-x-[20px] xl:mr-3 2xl:mr-5 ">
                         <img
                           src="/assets/YT.svg"
                           className="opacity-50 w-[8px] h-[8px] lg:w-[15px] lg:h-[13px]   xl:w-[15px] xl:h-[13px] 2xl:w-[26px] 2xl:h-[18px]"
@@ -546,11 +544,11 @@ const Form = () => {
 
               {RcurrentIndex === 1 ? (
                 <div
-                  onClick={setIsDrawerOpen}
+                  onClick={toggleDrawer}
                   className="sm:absolute sm:top-[45%] sm:right-0  md:relative sm:w-[25px] sm:h-[100px] md:w-[26px] md:h-[150px] lg:w-[30px] lg:h-[180px] 2xl:w-[50px] 2xl:h-[213px] bg-black rounded-tl-[15px] rounded-bl-[10px] flex justify-center items-center cursor-pointer"
                 >
                   <p
-                    onClick={setIsDrawerOpen}
+                    onClick={toggleDrawer}
                     className="text-white cursor-pointer text-[12px] md:text-[18px] 2xl:text-[26px] tracking-[4px]  -rotate-90"
                   >
                     MENU
@@ -558,11 +556,11 @@ const Form = () => {
                 </div>
               ) : (
                 <div
-                  onClick={setIsDrawerOpen}
+                  onClick={toggleDrawer}
                   className="flex justify-center items-center sm:absolute sm:top-[45%] sm:right-0  md:relative sm:w-[25px] sm:h-[100px] md:w-[26px]  md:h-[150px] lg:w-[30px] lg:h-[180px] 2xl:w-[50px] 2xl:h-[213px] bg-black rounded-tl-[15px] rounded-bl-[10px] cursor-pointer"
                 >
                   <img
-                    onClick={setIsDrawerOpen}
+                    onClick={toggleDrawer}
                     src={rightArr[RcurrentIndex]}
                     alt="Background Image"
                     className="sm:w-[15px] sm:h-[40px] md:w-[18px] md:h-[60px] 2xl:w-[23px] 2xl:h-[90px]   3xl:m-0 cursor-pointer "
@@ -577,27 +575,27 @@ const Form = () => {
               !isOpen && "md:ml-5"
             }  ${
               isOpen ? "" : "xl:-mt-5"
-            }  2xl:-mt-16 2xl:ml-10 3xl:-mt-10 md:-mt-[40px] ${
+            }  2xl:-mt-16 2xl:ml-10 3xl:-mt-16 md:-mt-[40px] ${
               isOpen ? "md:ml-5" : ""
             } xl:ml-10   cursor-pointer`}
           />
         </div>
 
         <footer className="leading-[10px] lg:leading-[15px] xl:leading-[20px] 2xl:leading-[30px]  2xl:mt-0">
-          <p className="text-[#BE9F56]  text-[6px] lg:text-[8px] 2xl:text-[10px] tracking-[2px] ml-5 sm:mb-1 lg:mb-0  xl:ml-10">
+          <p className="text-[#BE9F56] text-[4px] lg:text-[6px] xl:text-[8px] 2xl:text-[10px] tracking-[2px] ml-5 sm:mb-1 lg:mb-0  xl:ml-10">
             &copy; ZTRANSFER 2023{" "}
           </p>
           <div className="flex justify-between items-center ml-5 sm:mr-5 md:mr-0 xl:ml-10">
             <div className=" flex items-center ">
-              <span className="text-[#BE9F56] text-[6px] lg:text-[8px] xl:text-[8px] 2xl:text-[10px] tracking-[2px] ">
+              <span className="text-[#BE9F56] text-[4px]  lg:text-[6px]  xl:text-[8px] 2xl:text-[10px] tracking-[2px] ">
                 ALL RIGHTS RESERVED
               </span>
-              <span className="text-[#BE9F56] text-[6px] lg:text-[8px] xl:text-[8px] 2xl:text-[10px] tracking-[2px] md:mr-10 lg:mr-0 ml-10 xl:ml-10">
+              <span className="text-[#BE9F56] text-[4px] lg:text-[6px] xl:text-[8px] 2xl:text-[10px] tracking-[2px] md:mr-10 lg:mr-0 ml-10 xl:ml-10">
                 ZITRANFER IS THE PART OF ZIMO GROUP
               </span>
             </div>
 
-            <p className="text-[#BE9F56] text-[6px] lg:text-[8px] xl:text-[8px] 2xl:text-[10px] tracking-[2px] sm:mr-5 md:-mr-3 lg:mr-5 xl:mr-10">
+            <p className="text-[#BE9F56] text-[4px] lg:text-[6px]  xl:text-[8px] 2xl:text-[10px] tracking-[2px] sm:mr-0 md:-mr-3 lg:mr-5 xl:mr-10">
               ZITRANSFER USES ADVANCED ENCRIPTION STANDARD (AES) 256-BIT TO
               PROTECT THE CONFIDENTIALITY OF THE DATA YOU UPLOAD.
             </p>

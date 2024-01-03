@@ -8,7 +8,7 @@ const Navbar = () => {
     <div className="w-full">
       <header className="">
         <nav className="flex justify-between  sm:ml-5 sm:mt-5 md:mb-4 2xl:mt-10 xl:ml-8 md:mx-5 2xl:ml-10">
-          <div className="leading-[10px] md:leading-[15px] lg:leading-[22px] 2xl:leading-[30px] relative">
+          <div className="leading-[10px] md:leading-[15px] lg:leading-[22px] 2xl:leading-[32px] relative">
             <p className="uppercase text-[6px] md:text-[8px] lg:text-[10px] 2xl:text-[14px] text-left tracking-[2px] lg:tracking-[4px]">
               
               send files send folders send ideas share transfers in multiple
