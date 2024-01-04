@@ -5,9 +5,10 @@ import Head from "next/head";
 import HomePage from "./HomePage";
 import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  
+
   
   return (
     <>
@@ -16,8 +17,11 @@ export default function Home() {
       </Head>
 
       <main>
+
       <HomePage/>
       {/* <Sidebar/> */}
+
+      
       </main>
     </>
   );

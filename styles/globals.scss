@@ -45,3 +45,17 @@ body {
 @keyframes s3{ 
   100%{transform: rotate(1turn)}
 }
+
+
+
+.marquee-container {
+  overflow: hidden;
+  // width: 100%;
+ 
+}
+
+.marquee-content {
+  
+  transition: transform 0s infinite;
+}
+

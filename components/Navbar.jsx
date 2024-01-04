@@ -30,7 +30,7 @@ const Navbar = () => {
           </div>
 
 <div>
-<div className="flex items-center gap-x-4 sm:mr-2 md:-mr-2 xl:mr-5 lg:mr-1 2xl:mr-5">
+<div className="flex items-center gap-x-4 sm:mr-5 md:-mr-2 xl:mr-5 lg:mr-1 2xl:mr-5">
       <CiUser color="#BE9F56" className="text-[16px] 2xl:text-[20px]" />
       <img src="assets/UK.svg" alt="countryLogo" className="w-[20px] h-[20px] lg:w-[30px] lg:h-[30px] 2xl:w-[50px] 2xl:h-[50px]"/>
           </div>
